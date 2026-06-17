@@ -279,6 +279,24 @@ section { position: relative; }
 }
 .split-head .aside { font-size: 15.5px; line-height: 1.7; color: var(--ink-soft); max-width: 40ch; }
 
+/* ═══════════════════ PROLOGUE (open editorial) ═══════════════════ */
+#prologue { padding: clamp(54px, 9vh, 104px) 0; }
+.prologue-grid {
+  display: grid; grid-template-columns: 0.92fr 1.08fr;
+  gap: clamp(34px, 5.5vw, 82px); align-items: start;
+}
+.prologue-head .chapter { margin-bottom: 0; }
+.prologue-statement {
+  font-size: clamp(32px, 4vw, 54px); line-height: 1.07;
+  letter-spacing: -0.5px; color: var(--ink);
+  margin: 22px 0 0; max-width: 15ch;
+}
+.prologue-body { padding-top: 4px; }
+.prologue-body p { font-size: clamp(16px, 1.1vw, 17.5px); line-height: 1.8; color: var(--ink-soft); margin: 0 0 22px; max-width: 58ch; }
+.prologue-body p:last-child { margin-bottom: 0; }
+.prologue-body p.lead { font-size: clamp(17px, 1.35vw, 19.5px); line-height: 1.72; color: var(--ink); }
+.prologue-payoff { font-family: 'DM Serif Display', Georgia, serif; font-style: italic; color: var(--forest); }
+
 /* ═══════════════════ APPROACH (flowing) ═══════════════════ */
 #approach .ap-panel {
   position: relative;
@@ -482,6 +500,8 @@ footer .wordmark .bot { font-size: 10px; letter-spacing: 5px; color: var(--sage-
   .portrait { max-width: 360px; margin: 0; }
   .split-head { grid-template-columns: 1fr; align-items: start; gap: 22px; }
   .split-head h2 { max-width: 22ch; }
+  .prologue-grid { grid-template-columns: 1fr; gap: 24px; }
+  .prologue-statement { max-width: 20ch; margin-top: 18px; }
   .ap-grid { grid-template-columns: 1fr; gap: 0; }
   .ap-item { padding: 30px 0; }
   .ap-item:first-child { padding-top: 4px; }
@@ -501,4 +521,57 @@ footer .wordmark .bot { font-size: 10px; letter-spacing: 5px; color: var(--sage-
   .nav-links a:not(.nav-cta) { display: none; }
   .about-stats { gap: 24px; }
   .aud-cta { flex-direction: column; align-items: flex-start; }
+}
+
+/* ─── phones: scale all type to 70% of desktop ─── */
+@media (max-width: 600px) {
+  body { font-size: 11.2px; }
+
+  .chapter { font-size: 8.4px; }
+  .btn { font-size: 10.2px; }
+  .nav-inner .wordmark .top { font-size: 16.1px; }
+  .nav-inner .wordmark .bot { font-size: 6.7px; }
+  .nav-links a { font-size: 9.8px; }
+  .nav-cta { font-size: 9.5px; }
+
+  .hero-headline { font-size: clamp(32px, 5.18vw, 60px); }
+  .hero-sub { font-size: clamp(11.9px, 1.01vw, 13.3px); }
+  .portrait .ph span { font-size: 7.35px; }
+  .portrait-cap { font-size: 7.35px; }
+
+  .split-head h2 { font-size: clamp(23.8px, 3.08vw, 36.4px); }
+  .split-head .aside { font-size: 10.85px; }
+
+  .prologue-statement { font-size: clamp(22.4px, 2.8vw, 37.8px); }
+  .prologue-body p { font-size: clamp(11.2px, 0.77vw, 12.25px); }
+  .prologue-body p.lead { font-size: clamp(11.9px, 0.945vw, 13.65px); }
+
+  .ap-ghost { font-size: clamp(39.2px, 4.2vw, 57.4px); }
+  .ap-phase { font-size: 7.35px; }
+  .ap-problem { font-size: clamp(14.7px, 1.47vw, 17.5px); }
+  .ap-sol-label { font-size: 7px; }
+  .ap-solution { font-size: clamp(14px, 1.4vw, 16.8px); }
+
+  .sv-num { font-size: 9.1px; }
+  .sv-title { font-size: clamp(14px, 1.33vw, 16.8px); }
+  .sv-tag { font-size: 9.1px; }
+  .sv-dek { font-size: 10.15px; }
+  .sv-kind { font-size: 7.35px; }
+
+  .aud-head h2 { font-size: clamp(21px, 2.66vw, 32.2px); }
+  .aud-card h3 { font-size: clamp(14px, 1.4vw, 16.8px); }
+  .aud-card li { font-size: 10.15px; }
+  .aud-bridge { font-size: clamp(11.2px, 1.12vw, 12.6px); }
+
+  .about-bio h2 { font-size: clamp(23.8px, 3.08vw, 36.4px); }
+  .about-stat .v { font-size: clamp(21px, 2.38vw, 29.4px); }
+  .about-stat .k { font-size: 7.7px; }
+  .about-bio p { font-size: 11.2px; }
+
+  footer .wordmark .top { font-size: 22.4px; }
+  footer .wordmark .bot { font-size: 7px; }
+  .footer-tag { font-size: 10.15px; }
+  .footer-col h4 { font-size: 7.35px; }
+  .footer-col a { font-size: 10.15px; }
+  .footer-bottom { font-size: 8.05px; }
 }

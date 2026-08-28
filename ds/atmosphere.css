@@ -1,0 +1,139 @@
+/* ============================================================
+   ChapterOne Creative — Atmosphere (v1.1 amendment)
+   Paper wash backgrounds + ink-mark elements.
+
+   Drop into any page AFTER colors_and_type.css:
+     <link rel="stylesheet" href="colors_and_type.css">
+     <link rel="stylesheet" href="atmosphere.css">
+
+   ── Note for maintainers ───────────────────────────────────
+   This file intentionally relaxes two v1.0 rules for ONE
+   controlled, brand-owned use each:
+
+   • "No gradients. Anywhere."  → superseded by the *paper wash*:
+       barely-there tonal washes built from the brand mauve and
+       mid-green at very low alpha, used only as the page canvas
+       to soften hard section seams. Not for buttons, not for
+       type, not for panels.
+
+   • "No illustrations."        → superseded by the *ink mark*:
+       a single editorial motif (fountain-pen ink on paper) that
+       nods to the literary/“ChapterOne” idea. Decorative only,
+       always behind content, never a container or an icon.
+
+   Both are deliberate, sparing, and on-palette. Everything else
+   in v1.0 stands — hairlines over blocks, italic only in the
+   wordmark, no emoji, etc.
+   ============================================================ */
+
+:root {
+  /* The canvas wash itself — four soft radial pools that bleed
+     across section boundaries. Built from the brand --mauve and
+     --mid-green via color-mix, so it always tracks the palette.
+     Layer over --bg-paper. */
+  --paper-wash:
+    radial-gradient(1100px 620px at 82% -4%,  color-mix(in srgb, var(--mauve) 20%, transparent), transparent 58%),
+    radial-gradient(900px 760px at -8% 32%,   color-mix(in srgb, var(--mid-green) 11%, transparent), transparent 52%),
+    radial-gradient(1000px 720px at 105% 70%, color-mix(in srgb, var(--mauve) 15%, transparent), transparent 55%),
+    radial-gradient(820px 680px at 12% 96%,   color-mix(in srgb, var(--mid-green) 9%, transparent), transparent 55%);
+
+  /* Ink-mark pigments. Forest-ink is the default; rose is the
+     accent variant (echoes --deep-rose on light). */
+  --ink-mark:      #0C6B41; /* @kind color */
+  --ink-mark-rose: #A6406A; /* @kind color */
+}
+
+/* ── Paper wash ──────────────────────────────────────────────
+   Apply to <body> (or a full-page wrapper). Keep content above
+   it with position/z-index; the wash must never reduce text
+   contrast — it sits behind everything. */
+.ds-paper-wash {
+  background-color: var(--bg-paper);
+  background-image: var(--paper-wash);
+  background-attachment: fixed;
+}
+
+/* ── Ink mark (splatter) ─────────────────────────────────────
+   Decorative fountain-pen splatter: a solid core ringed by
+   flung droplets. Place as a sibling of your content, set the
+   content above it (position: relative; z-index: 1).
+
+   Rules of use:
+     • Margins and whitespace only — never on top of type.
+     • Behind content (z-index: 0), pointer-events: none.
+     • Vary size (--xs / --sm / default / --lg) and side; avoid a
+       regular left-right rhythm. Cluster a couple occasionally.
+     • One mark per zone is plenty. The page should breathe.
+     • Hidden on small screens by default (use .hide-sm).        */
+.ds-splat {
+  color: var(--ink-mark);
+  position: absolute; z-index: 0; pointer-events: none;
+  width: 210px; height: 180px;
+  opacity: .5;
+  transform: scale(.64);
+  filter: blur(.35px);
+  background-repeat: no-repeat;
+  background-image:
+    radial-gradient(3.1px 3.1px at 165.5px 31.5px, currentColor 96%, transparent 100%),
+    radial-gradient(6.2px 1.7px at 22.2px 56.2px, currentColor 97%, transparent 100%),
+    radial-gradient(5.1px 5.1px at 86.5px 43.7px, currentColor 96%, transparent 100%),
+    radial-gradient(3.6px 1.3px at 195.1px 54.4px, currentColor 97%, transparent 100%),
+    radial-gradient(4.2px 4.2px at 112.3px 61.5px, currentColor 96%, transparent 100%),
+    radial-gradient(1.3px 1.3px at 20.1px 86.3px, currentColor 96%, transparent 100%),
+    radial-gradient(4.5px 4.5px at 101.0px 32.9px, currentColor 96%, transparent 100%),
+    radial-gradient(4.2px 0.8px at 167.6px 143.3px, currentColor 97%, transparent 100%),
+    radial-gradient(4.5px 0.8px at 52.0px 148.1px, currentColor 97%, transparent 100%),
+    radial-gradient(1.3px 1.3px at 45.9px 8.9px, currentColor 96%, transparent 100%),
+    radial-gradient(6.1px 6.1px at 111.4px 89.9px, currentColor 96%, transparent 100%),
+    radial-gradient(3.8px 3.8px at 134.5px 51.0px, currentColor 96%, transparent 100%),
+    radial-gradient(1.8px 1.8px at 153.8px 156.9px, currentColor 96%, transparent 100%),
+    radial-gradient(4.0px 4.0px at 30.7px 70.4px, currentColor 96%, transparent 100%),
+    radial-gradient(6.2px 1.2px at 70.8px 146.1px, currentColor 97%, transparent 100%),
+    radial-gradient(3.0px 3.0px at 156.2px 97.1px, currentColor 96%, transparent 100%),
+    radial-gradient(6.0px 1.9px at 48.0px 118.9px, currentColor 97%, transparent 100%),
+    radial-gradient(3.9px 3.9px at 101.2px 46.1px, currentColor 96%, transparent 100%),
+    radial-gradient(4.7px 4.7px at 38.7px 75.5px, currentColor 96%, transparent 100%),
+    radial-gradient(4.2px 4.2px at 109.0px 76.6px, currentColor 96%, transparent 100%),
+    radial-gradient(2.3px 0.9px at 13.9px 92.9px, currentColor 97%, transparent 100%),
+    radial-gradient(4.1px 4.1px at 30.2px 87.5px, currentColor 96%, transparent 100%),
+    radial-gradient(4.6px 4.6px at 42.6px 60.7px, currentColor 96%, transparent 100%),
+    radial-gradient(5.1px 5.1px at 61.6px 71.4px, currentColor 96%, transparent 100%),
+    radial-gradient(9.9px 2.5px at 160.2px 59.7px, currentColor 97%, transparent 100%),
+    radial-gradient(4.9px 4.9px at 44.3px 80.4px, currentColor 96%, transparent 100%),
+    radial-gradient(2.1px 2.1px at 15.7px 61.7px, currentColor 96%, transparent 100%),
+    radial-gradient(5.1px 5.1px at 86.6px 99.7px, currentColor 96%, transparent 100%),
+    radial-gradient(6.7px 1.7px at 134.8px 142.6px, currentColor 97%, transparent 100%),
+    radial-gradient(5.6px 1.6px at 120.7px 163.9px, currentColor 97%, transparent 100%),
+    radial-gradient(1.7px 1.7px at 160.0px 48.7px, currentColor 96%, transparent 100%),
+    radial-gradient(2.7px 2.7px at 95.6px 12.0px, currentColor 96%, transparent 100%),
+    radial-gradient(4.9px 4.9px at 111.9px 53.2px, currentColor 96%, transparent 100%),
+    radial-gradient(1.6px 1.6px at 144.5px 33.5px, currentColor 96%, transparent 100%),
+    radial-gradient(4.0px 4.0px at 121.4px 116.4px, currentColor 96%, transparent 100%),
+    radial-gradient(4.3px 4.3px at 83.7px 140.5px, currentColor 96%, transparent 100%),
+    radial-gradient(3.1px 3.1px at 118.2px 161.1px, currentColor 96%, transparent 100%),
+    radial-gradient(4.9px 4.9px at 116.7px 46.4px, currentColor 96%, transparent 100%),
+    radial-gradient(1.3px 1.3px at 87.2px 171.2px, currentColor 96%, transparent 100%),
+    radial-gradient(5.3px 5.3px at 100.1px 92.5px, currentColor 96%, transparent 100%),
+    radial-gradient(3.3px 3.3px at 69.6px 129.2px, currentColor 96%, transparent 100%),
+    radial-gradient(1.4px 1.4px at 24.4px 37.4px, currentColor 96%, transparent 100%),
+    radial-gradient(5.0px 5.0px at 94.6px 42.9px, currentColor 96%, transparent 100%),
+    radial-gradient(4.2px 4.2px at 73.0px 69.4px, currentColor 96%, transparent 100%);
+}
+/* dense central blob (add as a child: <span class="core"></span>) */
+.ds-splat .core {
+  position: absolute; left: 49px; top: 40px;
+  width: 98px; height: 88px;
+  background: currentColor;
+  border-radius: 46% 54% 60% 40% / 52% 44% 56% 48%;
+}
+
+/* Variants */
+.ds-splat--rose { color: var(--ink-mark-rose); }
+.ds-splat--xs { transform: scale(.28); }
+.ds-splat--sm { transform: scale(.46); }
+.ds-splat--lg { transform: scale(.80); }
+
+/* Hide decorative marks on small screens. */
+@media (max-width: 720px) {
+  .ds-splat.hide-sm { display: none; }
+}

@@ -1,0 +1,40 @@
+name: Refresh blog posts
+
+# Rebuilds the post cards in blog/index.html from the ChapterOne Creative
+# Substack feed (scripts/build-blog.mjs). Runs on a schedule and on demand.
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-blog
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build blog cards from Substack
+        run: node scripts/build-blog.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- blog/index.html; then
+            echo "No changes to blog/index.html."
+          else
+            git add blog/index.html
+            git commit -m "chore: refresh blog posts from Substack"
+            git push
+          fi

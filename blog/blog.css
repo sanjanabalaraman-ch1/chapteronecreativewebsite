@@ -1,0 +1,167 @@
+/* ChapterOne Creative — /blog page styles. Built on the design system tokens;
+   reuses nav, footer, buttons, chapter marker and wordmark from styles.css. */
+
+/* ─── intro + subscribe ─── */
+#blog-head { padding: clamp(52px, 9vh, 104px) 0 clamp(28px, 4vh, 44px); }
+.blog-intro {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: end;
+}
+.blog-intro .chapter { margin-bottom: 22px; }
+.blog-intro h1 {
+  font-size: var(--fs-hero);
+  line-height: 1.05;
+  margin: 0;
+  max-width: 15ch;
+}
+.blog-intro .blog-lede {
+  font-size: clamp(17px, 1.4vw, 19px);
+  line-height: 1.62;
+  color: #454545;
+  margin: 16px 0 0;
+  max-width: 46ch;
+}
+
+.subscribe {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  padding: clamp(20px, 2.2vw, 28px);
+}
+.subscribe h2 {
+  font-size: clamp(20px, 2vw, 24px);
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+.subscribe p {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #454545;
+  margin: 0 0 16px;
+}
+.subscribe iframe {
+  width: 100%;
+  height: 90px;
+  border: 0;
+  background: transparent;
+  display: block;
+}
+.subscribe .subscribe-alt {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--fg-3);
+}
+
+/* ─── posts grid ─── */
+#posts-section { padding: clamp(30px, 5vh, 56px) 0 clamp(72px, 10vh, 120px); }
+.posts-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(24px, 3.5vh, 40px);
+}
+.posts-head h2 { font-size: var(--fs-sec); line-height: 1.08; }
+.posts-head .posts-updated {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2.2vw, 28px);
+  align-items: stretch;
+}
+.post-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--white);
+  text-decoration: none;
+  color: var(--ink-body);
+  transition: border-color var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+.post-card:hover { border-color: var(--forest); text-decoration: none; }
+.post-card:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+.post-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  background: var(--mauve-fill);
+  border-bottom: 1px solid var(--line);
+}
+.post-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: clamp(20px, 2vw, 26px);
+  flex: 1;
+}
+.post-date {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--deep-rose);
+}
+.post-card h3 {
+  font-size: clamp(19px, 1.7vw, 22px);
+  line-height: 1.24;
+  color: var(--ink-body);
+  margin: 0;
+}
+.post-excerpt {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #454545;
+  margin: 0;
+}
+.post-more {
+  margin-top: auto;
+  padding-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--forest);
+}
+.post-card:hover .post-more .icon { transform: translateX(4px); }
+.post-more .icon { transition: transform var(--dur-base) var(--ease-out); }
+
+/* ─── fallback (before the Action has populated posts, or on error) ─── */
+.posts-fallback {
+  display: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  padding: clamp(30px, 4vw, 48px);
+  text-align: center;
+}
+.posts-fallback h3 { font-size: clamp(20px, 2vw, 24px); line-height: 1.25; margin: 0 0 10px; }
+.posts-fallback p { font-size: 15px; line-height: 1.6; color: #454545; margin: 0 auto 22px; max-width: 46ch; }
+
+@media (max-width: 1000px) {
+  .blog-intro { grid-template-columns: 1fr; gap: 26px; align-items: start; }
+  .blog-intro h1 { max-width: 20ch; }
+  .posts-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  .posts-grid { grid-template-columns: 1fr; }
+}

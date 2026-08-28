@@ -189,8 +189,8 @@ const BROWSER_HEADERS = {
 const SOURCES = [
   FEED,
   `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
+  `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(FEED)}`,
   `https://corsproxy.io/?url=${encodeURIComponent(FEED)}`,
-  `https://thingproxy.freeboard.io/fetch/${FEED}`,
 ];
 
 async function fetchFeedXml() {
@@ -209,10 +209,19 @@ async function fetchFeedXml() {
       errors.push(`${url.split('?')[0]} -> ${err.message}`);
     }
   }
-  throw new Error(`Could not fetch the feed from any source:\n  ${errors.join('\n  ')}`);
+  console.warn(`Could not fetch the feed from any source:\n  ${errors.join('\n  ')}`);
+  return null;
 }
 
-const posts = parseFeed(await fetchFeedXml()).slice(0, MAX_POSTS);
+const xml = await fetchFeedXml();
+if (!xml) {
+  // Every source was down (flaky public proxies) — keep the existing cards
+  // rather than failing the run or blanking the page. Next run will refresh.
+  console.log('Feed unavailable this run — leaving blog/index.html cards unchanged.');
+  process.exit(0);
+}
+
+const posts = parseFeed(xml).slice(0, MAX_POSTS);
 if (!posts.length) throw new Error('Feed parsed but contained no posts — refusing to blank the page');
 
 const [lead, ...rest] = posts;

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blog — ChapterOne Creative</title>
-<meta name="description" content="Notes on narrative, content and storytelling for B2B from ChapterOne Creative. Read the latest articles and subscribe on Substack.">
+<meta name="description" content="Notes on narrative, pricing your own work, and what content is for now that anyone can produce it — from ChapterOne Creative. Read the latest and subscribe.">
 <link rel="canonical" href="https://chapteronecreative.io/blog/">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Sanjana Balaraman">
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ChapterOne Creative">
 <meta property="og:title" content="Blog — ChapterOne Creative">
-<meta property="og:description" content="Notes on narrative, content and storytelling for B2B. Read the latest and subscribe on Substack.">
+<meta property="og:description" content="Notes on narrative, pricing your own work, and what content is for now that anyone can produce it.">
 <meta property="og:url" content="https://chapteronecreative.io/blog/">
 <meta property="og:image" content="https://chapteronecreative.io/assets/social-share.png?v=2">
 <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Blog — ChapterOne Creative">
-<meta name="twitter:description" content="Notes on narrative, content and storytelling for B2B. Read the latest and subscribe on Substack.">
+<meta name="twitter:description" content="Notes on narrative, pricing your own work, and what content is for now that anyone can produce it.">
 <meta name="twitter:image" content="https://chapteronecreative.io/assets/social-share.png?v=2">
 
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
@@ -36,7 +36,7 @@
 <link rel="stylesheet" href="../ds/colors_and_type.css">
 <link rel="stylesheet" href="../ds/atmosphere.css">
 <link rel="stylesheet" href="../styles.css?v=5">
-<link rel="stylesheet" href="blog.css?v=1">
+<link rel="stylesheet" href="blog.css?v=2">
 </head>
 <body class="ds-paper-wash">
 
@@ -54,37 +54,88 @@
 </div>
 </nav>
 
-<section id="blog-head">
-<div class="splat rose xs hide-sm" style="top:30%; right:4%;"><span class="core"></span></div>
+<section id="blog-head" class="band band--sand" data-screen-label="Ch. 06 The blog">
+<div class="splat sm hide-sm" style="bottom:30px; left:3%;"><span class="core"></span></div>
 <div class="wrap">
-<div class="blog-intro">
-<div>
-<div class="chapter"><span class="no">Journal</span><span class="dot"></span><span class="label">Story first</span><span class="rule"></span></div>
-<h1>Notes on narrative &amp; <span class="c-rose">content.</span></h1>
-<p class="blog-lede">Essays on finding the story, telling it like a person, and getting B2B content to actually land. New pieces land on Substack &mdash; subscribe and they'll come to you.</p>
+<div class="bh-grid">
+<div class="bh-head">
+<div class="chapter on-sand reveal"><span class="no">Ch. 06</span><span class="dot"></span><span class="label">The blog</span></div>
+<h1 class="bh-title reveal d1">Notes on the story most businesses <span class="c-rose">aren't telling.</span></h1>
 </div>
-<div class="subscribe">
-<h2 class="serif">Subscribe</h2>
-<p>Get new articles in your inbox. No spam, unsubscribe anytime.</p>
-<iframe src="https://chapteronecreative.substack.com/embed" title="Subscribe to ChapterOne Creative on Substack" scrolling="no"></iframe>
-<p class="subscribe-alt">Prefer to read on Substack? <a href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener">Open the publication</a>.</p>
+<p class="bh-sub reveal d2">What I'm figuring out about narrative, pricing your own work, and what content is for now that anyone can produce it. Written as I go, not on a schedule.</p>
 </div>
+
+<form class="sub-form reveal d2" action="https://chapteronecreative.substack.com/subscribe" method="get" target="_blank" rel="noopener">
+<p class="sub-label"><span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-11Z"></path><path d="m3.5 6.8 8.5 6 8.5-6"></path></g></svg></span>Get new posts by email</p>
+<div class="sub-row">
+<label class="sr-only" for="sub-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Email address</label>
+<input id="sub-email" type="email" name="email" placeholder="you@company.com" required autocomplete="email">
+<button type="submit" class="btn btn-forest">Subscribe<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></button>
 </div>
+<p class="sub-note">Goes out on <a href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener">Substack</a>. No sequence, no pitch. Unsubscribe whenever.</p>
+</form>
 </div>
 </section>
 
-<section id="posts-section">
+<section id="posts" data-screen-label="Blog posts">
 <div class="wrap">
 <div class="posts-head">
-<h2>Latest posts</h2>
-<span class="posts-updated" id="posts-updated"></span>
+<h2 class="serif reveal">Latest</h2>
+<span class="posts-count reveal"><!--COUNT:START-->Three posts<!--COUNT:END--></span>
 </div>
-<div class="posts-grid" id="posts-grid" aria-live="polite"></div>
-<div class="posts-fallback" id="posts-fallback">
-<h3 class="serif">Fresh off the press, soon.</h3>
-<p>The latest articles will appear here automatically. In the meantime, you can read everything on Substack.</p>
-<a href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener" class="btn btn-forest">Read on Substack<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></a>
+
+<!--POSTS:START-->
+<a class="post post--feature post--mauve reveal" href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener">
+<div class="cover">
+<div class="cover-top"><span class="cover-no">01</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10"></path><path d="M14.5 9.3A2.8 2.8 0 0 0 12 8c-1.6 0-2.8.9-2.8 2s1.2 2 2.8 2 2.8.9 2.8 2-1.2 2-2.8 2a2.8 2.8 0 0 1-2.5-1.3"></path></g></svg></span></div>
+<span class="cover-ghost" aria-hidden="true">01</span>
 </div>
+<div class="post-body">
+<div class="post-meta"><span class="post-tag">Pricing</span><span class="sep"></span><span>Aug 2026</span></div>
+<h3>Get good at justifying your value</h3>
+<p>The flinch before you type the number doesn't go away. It just stops getting a vote.</p>
+<span class="post-foot">Read on Substack<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></span>
+</div>
+</a>
+
+<div class="post-grid">
+<a class="post post--green reveal" href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener">
+<div class="cover">
+<div class="cover-top"><span class="cover-no">02</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M17 12.5a2 2 0 0 1-2 2H8l-3.5 3.5V5.5a2 2 0 0 1 2-2H15a2 2 0 0 1 2 2v7Z"></path><path d="M20 8.5a2 2 0 0 1 1.5 2v9L18.5 17H11"></path></g></svg></span></div>
+<span class="cover-ghost" aria-hidden="true">02</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="post-tag">Content marketing</span><span class="sep"></span><span>Jul 2026</span></div>
+<h3>We handed the sales conversation to AI</h3>
+<p>Your content is the sales conversation for the longest stretch of the buying process. And we handed it to a machine.</p>
+<span class="post-foot">Read on Substack<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></span>
+</div>
+</a>
+
+<a class="post post--lavender reveal" href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener">
+<div class="cover">
+<div class="cover-top"><span class="cover-no">03</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 3v4M16 3v4"></path></g></svg></span></div>
+<span class="cover-ghost" aria-hidden="true">03</span>
+</div>
+<div class="post-body">
+<div class="post-meta"><span class="post-tag">Personal note</span><span class="sep"></span><span>Jun 2026</span></div>
+<h3>My last, last Monday morning</h3>
+<p>I'm not leaving for another job this time. I'm leaving to work for myself.</p>
+<span class="post-foot">Read on Substack<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></span>
+</div>
+</a>
+
+<a class="post post--more post--sand reveal" href="https://chapteronecreative.substack.com/" target="_blank" rel="noopener">
+<div class="post-body">
+<div class="post-meta"><span class="post-tag">The archive</span></div>
+<span class="more-mark" aria-hidden="true">&amp;c.</span>
+<h3>Everything else lives on Substack</h3>
+<p>Older posts, the ones still in drafts, and whatever goes out next.</p>
+<span class="post-foot">Open the archive<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></span>
+</div>
+</a>
+</div>
+<!--POSTS:END-->
 </div>
 </section>
 
@@ -121,42 +172,17 @@
 </footer>
 
 <script>
-(function () {
-  var ARROW = '<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span>';
-  var grid = document.getElementById('posts-grid');
-  var fallback = document.getElementById('posts-fallback');
-  var updated = document.getElementById('posts-updated');
-
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function fmtDate(iso) {
-    if (!iso) return '';
-    var d = new Date(iso + 'T00:00:00');
-    if (isNaN(d)) return '';
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
-  function showFallback() { grid.style.display = 'none'; if (fallback) fallback.style.display = 'block'; }
-
-  fetch('posts.json', { cache: 'no-cache' })
-    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-    .then(function (data) {
-      var posts = (data && data.posts) || [];
-      if (!posts.length) { showFallback(); return; }
-      grid.innerHTML = posts.map(function (p) {
-        var thumb = p.image
-          ? '<img class="post-thumb" src="' + esc(p.image) + '" alt="" loading="lazy">'
-          : '<div class="post-thumb"></div>';
-        var date = p.date ? '<span class="post-date">' + esc(fmtDate(p.date)) + '</span>' : '';
-        var excerpt = p.excerpt ? '<p class="post-excerpt">' + esc(p.excerpt) + '</p>' : '';
-        return '<a class="post-card" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + thumb +
-          '<div class="post-body">' + date + '<h3>' + esc(p.title) + '</h3>' + excerpt +
-          '<span class="post-more">Read on Substack' + ARROW + '</span></div></a>';
-      }).join('');
-      if (updated && data.updated) {
-        var u = new Date(data.updated);
-        if (!isNaN(u)) updated.textContent = 'Updated ' + u.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      }
-    })
-    .catch(showFallback);
+(function(){
+var items=Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function show(el){el.classList.add('in')}
+if(reduce||!('IntersectionObserver' in window)){items.forEach(show);return}
+function revealInView(){var vh=window.innerHeight||document.documentElement.clientHeight;items.forEach(function(el){if(el.classList.contains('in'))return;if(el.getBoundingClientRect().top<vh*0.92)show(el)})}
+revealInView();
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){show(x.target);io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:0.12});
+items.forEach(function(el){if(!el.classList.contains('in'))io.observe(el)});
+window.addEventListener('load',revealInView);
+setTimeout(function(){items.forEach(show)},1600);
 })();
 </script>
 </body>

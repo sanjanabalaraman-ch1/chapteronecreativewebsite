@@ -65,6 +65,8 @@ section{position:relative}
 .btn-mauve:focus-visible{outline-color:var(--white)}
 .btn-ghost{color:var(--forest);border-color:var(--forest);background:transparent}
 .btn-ghost:hover{color:var(--deep-rose);border-color:var(--deep-rose)}
+/* buttons are never underlined, even on the forest (.ds-on-dark) panel */
+.ds-on-dark .btn,.ds-on-dark .btn:hover{text-decoration:none}
 
 /* ═══ NAV ═══ */
 nav{position:sticky;top:0;z-index:100;background:rgba(252,251,250,0.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}

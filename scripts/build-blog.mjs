@@ -118,7 +118,15 @@ function replaceBlock(html, name, body) {
   return html.replace(re, `$1${body}$2`);
 }
 
-const res = await fetch(FEED, { headers: { 'user-agent': 'chapterone-blog-build' } });
+// Substack sits behind Cloudflare and 403s plain bot User-Agents, so present
+// a normal browser UA and Accept headers to fetch the feed.
+const res = await fetch(FEED, {
+  headers: {
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+    'accept': 'application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.7',
+    'accept-language': 'en-US,en;q=0.9'
+  }
+});
 if (!res.ok) throw new Error(`Feed request failed: ${res.status} ${res.statusText}`);
 
 const posts = parseFeed(await res.text()).slice(0, MAX_POSTS);

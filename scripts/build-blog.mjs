@@ -118,18 +118,42 @@ function replaceBlock(html, name, body) {
   return html.replace(re, `$1${body}$2`);
 }
 
-// Substack sits behind Cloudflare and 403s plain bot User-Agents, so present
-// a normal browser UA and Accept headers to fetch the feed.
-const res = await fetch(FEED, {
-  headers: {
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
-    'accept': 'application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.7',
-    'accept-language': 'en-US,en;q=0.9'
-  }
-});
-if (!res.ok) throw new Error(`Feed request failed: ${res.status} ${res.statusText}`);
+const BROWSER_HEADERS = {
+  'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+  'accept': 'application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8, */*;q=0.7',
+  'accept-language': 'en-US,en;q=0.9'
+};
 
-const posts = parseFeed(await res.text()).slice(0, MAX_POSTS);
+// Substack sits behind Cloudflare, which blocks GitHub Actions' datacenter IPs
+// (403) regardless of headers. Try the feed directly first, then fall back
+// through public read-only proxies that fetch from a different IP.
+const SOURCES = [
+  FEED,
+  `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
+  `https://corsproxy.io/?url=${encodeURIComponent(FEED)}`,
+  `https://thingproxy.freeboard.io/fetch/${FEED}`,
+];
+
+async function fetchFeedXml() {
+  const errors = [];
+  for (const url of SOURCES) {
+    try {
+      const res = await fetch(url, { headers: BROWSER_HEADERS });
+      if (!res.ok) { errors.push(`${url.split('?')[0]} -> HTTP ${res.status}`); continue; }
+      const xml = await res.text();
+      if (/<item[\s>]/i.test(xml)) {
+        console.log(`Feed fetched via ${url.split('?')[0]}`);
+        return xml;
+      }
+      errors.push(`${url.split('?')[0]} -> ok but no <item> found`);
+    } catch (err) {
+      errors.push(`${url.split('?')[0]} -> ${err.message}`);
+    }
+  }
+  throw new Error(`Could not fetch the feed from any source:\n  ${errors.join('\n  ')}`);
+}
+
+const posts = parseFeed(await fetchFeedXml()).slice(0, MAX_POSTS);
 if (!posts.length) throw new Error('Feed parsed but contained no posts — refusing to blank the page');
 
 const [lead, ...rest] = posts;

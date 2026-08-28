@@ -21,14 +21,65 @@ const FAMILIES = ['mauve', 'green', 'lavender'];
 const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
 
 // Brand icon set — 24px grid, 1.25px stroke. Keys are matched against the post's tag.
-const ICONS = {
-  pricing: '<circle cx="12" cy="12" r="9"></circle><path d="M12 7v10"></path><path d="M14.5 9.3A2.8 2.8 0 0 0 12 8c-1.6 0-2.8.9-2.8 2s1.2 2 2.8 2 2.8.9 2.8 2-1.2 2-2.8 2a2.8 2.8 0 0 1-2.5-1.3"></path>',
-  'content marketing': '<path d="M17 12.5a2 2 0 0 1-2 2H8l-3.5 3.5V5.5a2 2 0 0 1 2-2H15a2 2 0 0 1 2 2v7Z"></path><path d="M20 8.5a2 2 0 0 1 1.5 2v9L18.5 17H11"></path>',
-  messaging: '<path d="M4 20h4L20 8a2.83 2.83 0 0 0-4-4L4 16v4Z"></path><path d="M14.5 5.5 18.5 9.5"></path>',
-  positioning: '<circle cx="12" cy="12" r="9"></circle><path d="M15.6 8.4 13.1 13.1 8.4 15.6 10.9 10.9 15.6 8.4Z"></path>',
-  'personal note': '<rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18"></path><path d="M8 3v4M16 3v4"></path>',
-  _default: '<rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 9h18"></path><path d="M6.5 6.5h.01M9 6.5h.01"></path>'
+// Icon inner-shapes from the design-system icon pack (24px grid, 1.25 stroke;
+// they inherit currentColor from the wrapping <g>).
+const ICON = {
+  article:    '<rect x="3" y="4" width="18" height="16" rx="1.5"></rect><path d="M6.5 8h5v4h-5z"></path><path d="M14 8h3.5M14 11h3.5M6.5 15h11"></path>',
+  newsletter: '<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3.5 6.5 8.5 6.5 8.5-6.5"></path>',
+  scale:      '<path d="M12 4v16M7 20h10"></path><path d="M4 9h16"></path><path d="M4 9 1.8 14a3 3 0 0 0 4.4 0L4 9Z"></path><path d="M20 9l-2.2 5a3 3 0 0 0 4.4 0L20 9Z"></path>',
+  target:     '<circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1.3"></circle>',
+  bookmark:   '<path d="M6.5 3h11v18l-5.5-4.5L6.5 21V3Z"></path>',
+  book:       '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5v-15Z"></path><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"></path><path d="M8 7.5h7"></path>',
+  pen:        '<path d="M4 20h4L20 8a2.83 2.83 0 0 0-4-4L4 16v4Z"></path><path d="M14.5 5.5 18.5 9.5"></path>',
+  sparkle:    '<path d="M10.5 3.5c.95 4.35 2.4 5.8 6.75 6.75-4.35.95-5.8 2.4-6.75 6.75-.95-4.35-2.4-5.8-6.75-6.75 4.35-.95 5.8-2.4 6.75-6.75Z"></path><path d="M18.6 15.4c.36 1.72.92 2.28 2.64 2.64-1.72.36-2.28.92-2.64 2.64-.36-1.72-.92-2.28-2.64-2.64 1.72-.36 2.28-.92 2.64-2.64Z"></path>',
+  compass:    '<circle cx="12" cy="12" r="9"></circle><path d="M15.6 8.4 13.1 13.1 8.4 15.6 10.9 10.9 15.6 8.4Z"></path>',
+  funnel:     '<path d="M3.5 4.5h17L14 12.5V20l-4-2v-5.5L3.5 4.5Z"></path>',
+  megaphone:  '<path d="M4 10v4a1.5 1.5 0 0 0 1.5 1.5H8l6 4V6.5l-6 4H5.5A1.5 1.5 0 0 0 4 12Z"></path><path d="M17.5 9.5a4 4 0 0 1 0 5"></path>',
+  microphone: '<rect x="9.5" y="3" width="5" height="10" rx="2.5"></rect><path d="M6 11.5a6 6 0 0 0 12 0"></path><path d="M12 17.5V21"></path>',
+  award:      '<circle cx="12" cy="9" r="5.5"></circle><path d="m8.5 13.5-1.5 7 5-2.5 5 2.5-1.5-7"></path>',
+  quote:      '<path d="M9.5 6.5C7 7.8 5.5 10 5.5 12.8c0 2.4 1.4 4 3.3 4 1.7 0 3-1.2 3-2.9 0-1.6-1.1-2.8-2.7-2.8-.3 0-.6 0-.9.1.3-1.5 1.3-2.7 2.7-3.5Z"></path><path d="M18.5 6.5c-2.5 1.3-4 3.5-4 6.3 0 2.4 1.4 4 3.3 4 1.7 0 3-1.2 3-2.9 0-1.6-1.1-2.8-2.7-2.8-.3 0-.6 0-.9.1.3-1.5 1.3-2.7 2.7-3.5Z"></path>',
+  people:     '<circle cx="9.2" cy="8" r="3.2"></circle><path d="M3 19.5a6.2 6.2 0 0 1 12.4 0"></path><path d="M16.2 5.4a3.2 3.2 0 0 1 0 6.4"></path><path d="M17.4 14a6.2 6.2 0 0 1 3.6 5.5"></path>',
+  chartUp:    '<path d="M3 20h18"></path><path d="m5 15 4.5-5 3.5 3 6-7"></path><path d="M14.5 6H19v4.5"></path>',
+  search:     '<circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m15.5 15.5 4.5 4.5"></path>',
+  video:      '<rect x="3" y="6" width="12" height="12" rx="2"></rect><path d="M15 10.5 21 7.5v9L15 13.5Z"></path>',
+  briefcase:  '<rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2"></path><path d="M3 12.5h18"></path>',
+  lightbulb:  '<path d="M9 16.5a6 6 0 1 1 6 0v1.5H9v-1.5Z"></path><path d="M10 21h4"></path>',
 };
+
+// Exact Substack tag (lowercased) -> icon. Reliable when a post is tagged.
+const TAG_ICON = {
+  'pricing': 'scale', 'content marketing': 'newsletter', 'content': 'newsletter',
+  'messaging': 'target', 'positioning': 'target', 'personal note': 'bookmark',
+  'narrative': 'book', 'storytelling': 'book', 'writing': 'pen', 'ai': 'sparkle',
+  'strategy': 'compass', 'sales': 'funnel', 'social media': 'megaphone',
+  'podcast': 'microphone', 'branding': 'award', 'customer stories': 'quote',
+};
+
+// Fallback when there's no matching tag: scan tag + title for a keyword.
+// First match wins, so order specific -> general. Keys are substrings; the
+// text is space-padded, so a leading/trailing space acts as a word boundary.
+const KEYWORD_ICON = [
+  [['narrative', 'storytell', ' story', 'stories', ' book'], 'book'],
+  [['pric', 'value', 'worth', 'rate card', 'charge', 'justif', ' fee'], 'scale'],
+  [[' ai', 'ai ', 'a.i', 'artificial intelligence', 'chatgpt', ' gpt', 'llm', 'genai', 'gen ai', 'automation', 'the machine', 'slop'], 'sparkle'],
+  [['podcast', 'audio '], 'microphone'],
+  [['webinar', 'video', 'youtube'], 'video'],
+  [['ghostwrit', 'copywrit', 'writing', 'writer', ' write ', 'draft', 'prose', 'essay', 'editing'], 'pen'],
+  [['newsletter', ' email', 'inbox'], 'newsletter'],
+  [['linkedin', 'social media', ' social ', ' feed'], 'megaphone'],
+  [['branding', ' brand ', 'rebrand'], 'award'],
+  [['messag', 'position', 'homepage', 'website copy', 'landing page', 'headline', 'tagline', 'value prop'], 'target'],
+  [['strateg', ' plan', 'roadmap', 'framework'], 'compass'],
+  [['presales', 'pmm', 'gtm', 'pipeline', 'demand', 'funnel', ' leads', 'outbound', 'inbound', 'prospect', ' deal', 'sales '], 'funnel'],
+  [['customer stor', 'case stud', 'testimonial', 'proof'], 'quote'],
+  [['founder', 'entrepreneur', 'journey', 'personal', 'monday', 'leaving', 'solo', 'freelanc', 'quit'], 'bookmark'],
+  [['audience', 'community', ' team ', 'people', 'hiring', 'colleague'], 'people'],
+  [['growth', 'metric', 'result', ' roi', 'convert', 'conversion', ' revenue'], 'chartUp'],
+  [[' seo', 'search ', 'discover', 'ranking'], 'search'],
+  [[' idea', 'lesson', 'learned', 'learning', 'insight'], 'lightbulb'],
+  [['content', 'marketing'], 'newsletter'],
+  [['career', ' job', ' work', 'business'], 'briefcase'],
+];
 const ARROW = '<path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path>';
 
 const svg = (paths, cls = 'icon') =>
@@ -65,7 +116,15 @@ function summarize(text) {
   return out;
 }
 
-const iconFor = t => ICONS[(t || '').trim().toLowerCase()] || ICONS._default;
+function iconFor(post) {
+  const tag = (post.category || '').trim().toLowerCase();
+  if (TAG_ICON[tag]) return ICON[TAG_ICON[tag]];
+  const text = ` ${tag} ${(post.title || '').toLowerCase()} `;
+  for (const [keys, name] of KEYWORD_ICON) {
+    if (keys.some(k => text.includes(k))) return ICON[name];
+  }
+  return ICON.article;
+}
 const monthYear = d => Number.isNaN(d.getTime()) ? '' :
   d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 
@@ -90,7 +149,7 @@ const card = (p, i, featured) => {
   const family = featured ? 'mauve' : FAMILIES[i % FAMILIES.length];
   return `<a class="post ${featured ? 'post--feature ' : ''}post--${family} reveal" href="${esc(p.link)}" target="_blank" rel="noopener">
 <div class="cover">
-<div class="cover-top"><span class="cover-no">${no}</span>${svg(iconFor(p.category))}</div>
+<div class="cover-top"><span class="cover-no">${no}</span>${svg(iconFor(p))}</div>
 <span class="cover-ghost" aria-hidden="true">${no}</span>
 </div>
 <div class="post-body">

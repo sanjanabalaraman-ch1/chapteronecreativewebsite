@@ -24,6 +24,9 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Sync nav/footer across pages
+        run: node scripts/chrome.mjs
+
       - name: Build blog cards from Substack
         run: node scripts/build-blog.mjs
 
@@ -31,10 +34,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- blog/index.html; then
-            echo "No changes to blog/index.html."
+          if git diff --quiet -- index.html blog/index.html; then
+            echo "No changes."
           else
-            git add blog/index.html
-            git commit -m "chore: refresh blog posts from Substack"
+            git add index.html blog/index.html
+            git commit -m "chore: refresh blog posts + sync site chrome"
             git push
           fi

@@ -17,6 +17,9 @@
 .sub-row input:focus{outline:2px solid var(--forest);outline-offset:2px;border-color:var(--forest)}
 .sub-note{margin-top:14px;font-size:13px;line-height:1.6;color:#6d6152;max-width:44ch}
 .sub-note a{color:var(--forest)}
+/* Substack embed — inline signup; its inner controls are Substack-styled (cross-origin) */
+.sub-embed{margin-top:2px}
+.sub-embed iframe{width:100%;max-width:480px;height:150px;border:0;background:transparent;display:block}
 
 /* ═══ the grid ═══ */
 #posts{padding:clamp(64px,9vh,110px) 0 clamp(72px,10vh,124px)}

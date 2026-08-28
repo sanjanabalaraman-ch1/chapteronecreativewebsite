@@ -1,0 +1,638 @@
+/* ============================================================
+   ChapterOne Creative — Design Tokens
+   Colors, type, spacing, radii, shadows, and semantic styles.
+   Drop into any page with:
+     <link rel="stylesheet" href="colors_and_type.css">
+   Fonts (DM Sans, DM Serif Display) are loaded via the Google Fonts <link> in index.html.
+   ============================================================ */
+
+/* v1.1 Atmosphere amendment — paper wash + ink-mark tokens/classes.
+   Kept as a separate file so consumers can link it after this one;
+   imported here so its tokens are part of the canonical system. */
+@import url('atmosphere.css');
+
+/* -------- Webfonts (local) --------
+   DM Sans loaded as static weights (more reliable than variable
+   font across rendering contexts). DM Serif Display ships with both
+   Regular and Italic — the wordmark uses the italic. */
+
+
+
+:root {
+  /* -------- Brand colors -------- */
+  --mauve:     #D3A6BB;   /* primary — hero, feature panels */
+  --forest:    #06402B;   /* secondary — anchor, CTA, nav  */
+  --white:     #FFFFFF;   /* structure — separates, breathes */
+  --deep-rose: #8C4A6E;   /* accent — headings on light */
+  --mid-green: #3A9470;   /* accent — details on dark   */
+
+  /* -------- Mauve tints (1 darkest → 6 lightest) -------- */
+  --m-1: #8C4A6E;
+  --m-2: #B07090;
+  --m-3: #D3A6BB;
+  --m-4: #E5C8D5;
+  --m-5: #F2E2EA;
+  --m-6: #FAF3F7;
+
+  /* -------- Green tints (1 darkest → 6 lightest) -------- */
+  --g-1: #06402B;
+  --g-2: #0D6645;
+  --g-3: #3A9470;
+  --g-4: #7DC3A8;
+  --g-5: #B8E0D3;
+  --g-6: #E8F5F0;
+
+  /* ============================================================
+     TINT FAMILIES — the four-family model.
+
+     Surfaces (what a whole page/slide/band is made of) are three
+     and only three: white, dusty mauve, forest green.
+     Tint families (what a CARD sitting on a surface is made of)
+     are four. Mauve + green are brand colors; sand + lavender are
+     DOCUMENT colors only — they never take a hero, never become a
+     surface, never appear in chrome. Four families is the ceiling.
+
+     Each family has four steps:
+       fill   — the card
+       rule   — hairlines and dividers inside it
+       ink    — headings and labels on it
+       signal — the one step light enough to read on forest green
+                (and ONLY usable there — see --*-signal notes)
+     ============================================================ */
+
+  /* Mauve family */
+  --mauve-fill:   #FAF3F7;
+  --mauve-rule:   #D3A6BB;
+  --mauve-ink:    #8C4A6E;
+  --mauve-signal: #D3A6BB;
+
+  /* Green family */
+  --green-fill:   #E8F5F0;
+  --green-rule:   #3A9470;
+  --green-ink:    #0D6645;
+  --green-signal: #3A9470;
+
+  /* Lavender family — dusty mauve's cool sibling. Document color.
+     Lavender cards live on WHITE or FOREST, never on a mauve surface. */
+  --lavender-fill:   #EFEBF7;
+  --lavender-rule:   #DED6EF;
+  --lavender-ink:    #5D4E7C;
+  --lavender-signal: #C7BAE4;
+
+  /* Sand family — a desaturated warm, reads as paper. Document color.
+     Sand does NOT rotate: it is reserved for the one element that is
+     different (pull-quote, testimonial, aside, editor's note). */
+  --sand-fill:   #FAF4E8;
+  --sand-rule:   #F2E6D0;
+  --sand-ink:    #8A6A3B;
+  --sand-signal: #E8D3A8;
+
+  /* -------- Foreground (text) -------- */
+  --ink-body: #2A2A2A;  /* canonical body ink — clears 12:1 on every tint */
+  --fg-1: #2A2A2A;   /* primary text on light (= --ink-body) */
+  --fg-2: #5a5a5a;   /* secondary text / lede */
+  --fg-3: #9a9a9a;   /* tertiary / captions / eyebrows */
+  --fg-inverse: #FFFFFF;
+
+  /* -------- Background / surface -------- */
+  --bg-paper:   #FCFBFA;
+  --bg-surface: #FFFFFF;
+  --bg-mauve:   #D3A6BB;
+  --bg-forest:  #06402B;
+  --bg-tint:    #FAF3F7;  /* mauve-6, the warmest neutral */
+
+  /* Soft surfaces. Promoted from card-fill-only to full surfaces so the
+     brand has steps between white and its two saturated grounds — mauve
+     and forest alone were reading harsh. These are page and band grounds;
+     the saturated pair still leads and anchors. */
+  --bg-sand:     #FAF4E8;
+  --bg-lavender: #EFEBF7;
+
+  /* -------- Hairlines & borders -------- */
+  --line:       #e8e8e8;
+  --line-soft:  #f2f2f2;
+  --line-ink:   #06402B;   /* hairline on light */
+  --line-mauve: #3A9470;   /* hairline on dark (mid-green) */
+
+  /* -------- Text on a dark ground --------
+     Measured, not chosen by feel:
+       white      11.8:1   ✓ headings, wordmark
+       sand       10.8:1   ✓ body — the default
+       mauve       5.6:1   passes, but half of sand and the pink/green
+                           hue clash reads muddier than the number
+       mid green   3.2:1   ✗ FAILS body text — hairlines and details only
+     So on forest: body is sand, headings are white. Mauve is not a
+     text colour on dark, and mid green never is. */
+  --on-dark-heading: #FFFFFF;
+  --on-dark-body:    #FAF4E8;   /* sand — 10.8:1 */
+  --on-dark-muted:   #C8BFA8;   /* 6.5:1 — captions, meta */
+  --on-dark-rule:    #3A9470;   /* mid green — hairlines ONLY, never type */
+
+  /* -------- Text on the mauve surface --------
+     deep rose on mauve is 2.99:1 and FAILS. Ink and forest are the
+     only two that clear AA, so mauve grounds take dark type. */
+  --on-mauve-heading: #06402B;  /* forest — 5.6:1 */
+  --on-mauve-body:    #2A2A2A;  /* ink — 6.8:1 */
+
+  /* -------- Disabled / inactive --------
+     Deliberately OUTSIDE the brand palette. Sand in particular is close
+     to the conventional styling for muted and disabled UI, and a sand
+     pull-quote three sections below a sand-looking inactive control
+     teaches the reader the wrong thing. So disabled states are grey,
+     and they are explicit values — never a brand fill at reduced
+     opacity, which composites fill and label together and lands on a
+     tinted-looking wash with unreadable contrast. */
+  --disabled-fill: #EDEDED;
+  --disabled-ink:  #666666;   /* 4.8:1 on --disabled-fill */
+  --disabled-line: #DCDCDC;
+
+  /* ============================================================
+     SYSTEM STATES
+
+     There is NO warning state. A form needs to say "this field is
+     wrong" and "the message sent"; it does not need a third, softer
+     "be careful" state — and that third state is the only one sand
+     collides with. If something needs hedging, the copy hedges.
+
+     System messaging is NEVER a filled panel. An error or a
+     confirmation is a line of type with an icon, sitting under the
+     field it belongs to, on whatever surface is already there.
+     That is what keeps sand's single meaning intact: "aside" is a
+     card, "system state" is not.
+     ============================================================ */
+  --state-error:   #9E2F2F;  /* utility red — deliberately NOT a brand color */
+  --state-success: #0D6645;  /* deep green */
+
+  /* Legacy aliases (--warn intentionally absent: no warning state) */
+  --ok:     #0D6645;
+  --danger: #9E2F2F;
+
+  /* -------- Typography stacks -------- */
+  --font-serif: 'DM Serif Display', 'Hoefler Text', Georgia, 'Times New Roman', serif;
+  --font-sans:  'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono:  ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* -------- Type scale --------
+     Aligned to the brand spec's stated scale. These are SCREEN sizes
+     (px), governing web pages and documents — decks are specced in
+     inches relative to slide width, and social composes at ~1080px
+     on the short edge and designs to the ratio. Neither takes its
+     sizing from here.
+
+     Spec:  Display 42 · H1 32 · H2 24 · H3 19 · Body 15 · Caption 12
+     --fs-h4 / --fs-lede / --fs-small are system extras filling the
+     gaps the six-step spec leaves. */
+  --fs-display: 42px;
+  --fs-h1:      32px;
+  --fs-h2:      24px;
+  --fs-h3:      19px;
+  --fs-h4:      17px;
+  --fs-lede:    17px;
+  --fs-body:    15px;
+  --fs-small:   13px;
+  --fs-caption: 12px;
+  --fs-eyebrow: 12px;
+
+  --lh-tight:  1.05; /* @kind other */
+  --lh-snug:   1.2;  /* @kind other */
+  --lh-normal: 1.55; /* @kind other */
+  --lh-loose:  1.7;  /* @kind other */
+
+  --tracking-eyebrow: 0.32em;   /* ~4px at 12px */
+  --tracking-wordmark: 0.42em;  /* 6px at 14px */
+  --tracking-tight:    -0.02em;
+
+  /* -------- Spacing (8px rhythm) -------- */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 96px;
+  --space-7: 128px;
+
+  /* -------- Radii -------- */
+  --radius-xs: 4px;     /* chips, tags                */
+  --radius-sm: 6px;     /* small controls             */
+  --radius-md: 10px;    /* default cards, inputs      */
+  --radius-lg: 12px;    /* feature cards, panels      */
+  --radius-xl: 14px;    /* callouts                   */
+  --radius-pill: 999px;
+
+  /* -------- Shadows (used sparingly — hairlines preferred) -------- */
+  --shadow-1: 0 1px 2px rgba(6, 64, 43, 0.04);
+  --shadow-2: 0 2px 8px rgba(6, 64, 43, 0.06), 0 1px 2px rgba(6, 64, 43, 0.04);
+  --shadow-3: 0 8px 24px rgba(6, 64, 43, 0.08), 0 2px 6px rgba(6, 64, 43, 0.04);
+
+  /* -------- Grid / layout -------- */
+  --grid-max:    1180px;
+  --grid-gutter: 24px;
+  --grid-cols:   12; /* @kind other */
+
+  /* -------- Motion -------- */
+  --ease-out:   cubic-bezier(0.2, 0.7, 0.2, 1); /* @kind other */
+  --ease-in-out: cubic-bezier(0.6, 0.05, 0.2, 1); /* @kind other */
+  --dur-fast:   140ms; /* @kind other */
+  --dur-base:   220ms; /* @kind other */
+  --dur-slow:   360ms; /* @kind other */
+}
+
+/* ============================================================
+   Base resets and typographic defaults
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-1);
+  background: var(--bg-paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ============================================================
+   Semantic typography classes
+   Use these directly: <h1 class="ds-h1">…</h1>
+   ============================================================ */
+
+.ds-display {
+  font-family: var(--font-serif);
+  font-style: normal;       /* italic is reserved for the wordmark */
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.ds-h1 {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: var(--fs-h1);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.ds-h2 {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+.ds-h3 {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  color: var(--fg-1);
+  margin: 0;
+  font-weight: 400;
+}
+
+.ds-h4 {
+  font-family: var(--font-serif);
+  font-style: normal;
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+  color: var(--fg-1);
+  margin: 0;
+  font-weight: 400;
+}
+
+.ds-lede {
+  font-family: var(--font-sans);
+  font-size: var(--fs-lede);
+  line-height: 1.6;
+  color: var(--fg-2);
+  max-width: 65ch;
+  margin: 0;
+}
+
+.ds-body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-1);
+}
+
+.ds-small  { font-size: var(--fs-small);  color: var(--fg-2); }
+.ds-caption{ font-size: var(--fs-caption);color: var(--fg-3); }
+.ds-mono   { font-family: var(--font-mono); font-size: var(--fs-caption); color: var(--fg-1); }
+
+.ds-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-2);
+  margin: 0;
+}
+
+.ds-wordmark {
+  display: inline-block;
+  line-height: 1;
+}
+.ds-wordmark .top {
+  font-family: var(--font-serif);
+  font-style: italic;           /* italic only here, by rule */
+  font-size: 64px;
+  color: var(--forest);
+  letter-spacing: -0.5px;
+  display: block;
+}
+.ds-wordmark .bot {
+  display: block;
+  margin-top: 8px;
+  margin-left: 4px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wordmark);
+  color: var(--deep-rose);
+}
+
+/* On-dark variants */
+.on-forest { background: var(--bg-forest); color: var(--white); }
+.on-forest .ds-eyebrow { color: var(--mid-green); }
+.on-forest .ds-h1,
+.on-forest .ds-h2,
+.on-forest .ds-h3 { color: var(--mauve); }
+.on-forest .ds-lede,
+.on-forest .ds-body { color: rgba(255,255,255,0.82); }
+
+/* ============================================================
+   Reusable primitives
+   ============================================================ */
+
+.ds-rule { height: 1px; background: var(--line); border: 0; }
+.ds-rule--ink { background: var(--forest); }
+.ds-rule--soft { background: var(--line-soft); }
+
+.ds-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.ds-card--quiet {
+  background: var(--bg-tint);
+  border: 1px solid var(--m-5);
+  border-radius: var(--radius-lg);
+}
+
+/* Buttons */
+/* ============================================================
+   CARDS ON A SOFT GROUND
+
+   A soft ground (sand or lavender) and a card fill from the SAME
+   family cancel each other out. Sand as a ground means "a quiet
+   section"; sand as a fill means "this one is different." Once a
+   reader has seen it as background they stop reading it as an aside,
+   and the card loses its edge as well as its meaning.
+
+   So the ground's own family sits out:
+     Pages  \u2014 cards on a soft ground are white (.ds-soft-ground).
+     Decks  \u2014 the ground's family drops out of the rotation, and the
+              other soft family takes its slot. A lavender slide
+              rotates mauve \u2192 green \u2192 sand; a sand slide rotates
+              mauve \u2192 green \u2192 lavender.
+   ============================================================ */
+/* ============================================================
+   TEXT ON A COLOURED GROUND
+
+   Two grounds carry type, and each has exactly one right answer.
+
+   On forest green — body is SAND, headings are WHITE.
+   Mauve clears AA at 5.6:1 but sand is 10.8:1 and white is 11.8:1,
+   and pink on green reads muddier than its ratio suggests. Mid green
+   is 3.2:1: hairlines and details only, never type.
+
+   On mauve — type is FOREST or INK.
+   Deep rose on mauve is 2.99:1 and fails outright, even though rose
+   is the accent ink everywhere else. On the mauve TINT (#FAF3F7) rose
+   is 5.9:1 and correct — the tint and the surface are not the same
+   colour and do not take the same ink.
+   ============================================================ */
+.ds-on-dark{color:var(--on-dark-body)}
+.ds-on-dark h1,.ds-on-dark h2,.ds-on-dark h3,.ds-on-dark .ds-display,
+.ds-on-dark .ds-h1,.ds-on-dark .ds-h2,.ds-on-dark .ds-h3{color:var(--on-dark-heading)}
+.ds-on-dark .ds-caption,.ds-on-dark .ds-small{color:var(--on-dark-muted)}
+.ds-on-dark hr,.ds-on-dark .ds-rule{border-color:var(--on-dark-rule);background:var(--on-dark-rule)}
+.ds-on-dark a{color:var(--on-dark-heading);text-decoration:underline}
+.ds-on-dark a:hover{color:var(--on-dark-body)}
+
+.ds-on-mauve{color:var(--on-mauve-body)}
+.ds-on-mauve h1,.ds-on-mauve h2,.ds-on-mauve h3,.ds-on-mauve .ds-display,
+.ds-on-mauve .ds-h1,.ds-on-mauve .ds-h2,.ds-on-mauve .ds-h3{color:var(--on-mauve-heading)}
+.ds-on-mauve a{color:var(--on-mauve-heading)}
+.ds-on-mauve a:hover{color:var(--on-mauve-body)}
+
+.ds-soft-ground{background:var(--bg-sand)}
+.ds-soft-ground--lavender{background:var(--bg-lavender)}
+
+/* Cards on a soft ground default to white with a hairline borrowed from
+   the ground's rule step, so they read as objects without a new hue. */
+.ds-soft-ground > .ds-card-tint{background:var(--white);border-color:#EDE4D2}
+.ds-soft-ground--lavender > .ds-card-tint{background:var(--white);border-color:var(--lavender-rule)}
+
+/* Same-family card on the same soft ground \u2014 the thing the rule forbids. */
+.ds-soft-ground > .ds-card-tint--sand,
+.ds-soft-ground--lavender > .ds-card-tint--lavender{background:var(--white)}
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 14px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.ds-btn:active { transform: translateY(1px); }
+
+.ds-btn--primary {
+  background: var(--forest);
+  color: var(--white);
+}
+.ds-btn--primary:hover { background: var(--g-2); }
+
+.ds-btn--secondary {
+  background: transparent;
+  color: var(--forest);
+  border-color: var(--forest);
+}
+.ds-btn--secondary:hover { background: var(--g-6); }
+
+.ds-btn--ghost {
+  background: transparent;
+  color: var(--forest);
+  padding: 14px 4px;
+}
+.ds-btn--ghost:hover { color: var(--deep-rose); }
+
+/* Form field */
+.ds-input {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--fg-1);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-bottom: 1px solid var(--forest); /* hairline accent */
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.ds-input::placeholder { color: var(--fg-3); }
+.ds-input:focus { border-color: var(--forest); }
+
+/* Tags / chips */
+.ds-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--deep-rose);
+  border: 1px solid var(--m-4);
+  background: var(--m-6);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+}
+
+/* ============================================================
+   TINT CARDS — the four families as components.
+
+   Rotation: where three or four parallel elements sit together
+   they take mauve → green → lavender, in that order, held by
+   POSITION and held across the whole artefact. Sand sits out.
+
+   Rule 9: fill is never the only thing distinguishing two
+   elements. The four tints are matched in lightness (sand and
+   mauve are 1.00:1), so in greyscale a rotated set is one card
+   repeated. Every card in a rotation also needs its own icon,
+   label or heading doing the identifying work.
+   ============================================================ */
+.ds-card-tint{background:var(--mauve-fill);border:1px solid var(--mauve-rule);border-radius:var(--radius-lg);padding:var(--space-3)}
+.ds-card-tint .ds-card-ink,.ds-card-tint h1,.ds-card-tint h2,.ds-card-tint h3{color:var(--mauve-ink)}
+.ds-card-tint hr,.ds-card-tint .ds-rule{background:var(--mauve-rule);height:1px;border:0}
+.ds-card-tint .ds-icon{color:var(--mauve-ink)}
+
+.ds-card-tint--mauve{background:var(--mauve-fill);border-color:var(--mauve-rule)}
+.ds-card-tint--mauve .ds-card-ink{color:var(--mauve-ink)}
+.ds-card-tint--mauve .ds-icon{color:var(--mauve-ink)}
+
+.ds-card-tint--green{background:var(--green-fill);border-color:var(--green-rule)}
+.ds-card-tint--green .ds-card-ink{color:var(--green-ink)}
+.ds-card-tint--green .ds-icon{color:var(--green-ink)}
+
+.ds-card-tint--lavender{background:var(--lavender-fill);border-color:var(--lavender-rule)}
+.ds-card-tint--lavender .ds-card-ink{color:var(--lavender-ink)}
+.ds-card-tint--lavender .ds-icon{color:var(--lavender-ink)}
+
+/* Sand — the aside. Not part of the rotation. */
+.ds-card-tint--sand{background:var(--sand-fill);border-color:var(--sand-rule)}
+.ds-card-tint--sand .ds-card-ink{color:var(--sand-ink)}
+.ds-card-tint--sand .ds-icon{color:var(--sand-ink)}
+
+/* Sand ink is the thin one: 4.6:1. Headings and labels 16px+ only.
+   Running copy and anything under ~16px on a sand card takes body ink. */
+.ds-card-tint--sand .ds-body,.ds-card-tint--sand .ds-caption,.ds-card-tint--sand p{color:var(--ink-body)}
+
+/* Hover: the FILL NEVER CHANGES. The only darker step in each family
+   is the rule step, and using it as a hover fill wrecks ink contrast
+   (deep green on mid green drops to 1.9:1). Hover is carried by the
+   hairline, the arrowRight icon, or the heading underline — pick one. */
+.ds-card-tint--interactive{transition:border-color var(--dur-fast) var(--ease-out),border-width var(--dur-fast) var(--ease-out)}
+.ds-card-tint--interactive:hover{border-color:var(--forest)}
+.ds-card-tint--interactive:focus-visible{outline:2px solid var(--forest);outline-offset:2px}
+
+/* ============================================================
+   LINKS — forest green and underlined, everywhere, regardless of
+   the card they sit in. On forest green surfaces, dusty mauve.
+
+   This is the one place the "takes the ink of its card" rule
+   deliberately does NOT apply: a link belongs to a class that runs
+   across the whole artefact, and four link colors means the reader
+   has to learn four before they can tell what is clickable.
+   Forest holds ~10.5:1 on all four tints, so there is no cost.
+   ============================================================ */
+a{color:var(--forest);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+a:hover{color:var(--deep-rose);text-decoration-thickness:1.5px}
+a:focus-visible{outline:2px solid var(--forest);outline-offset:2px;border-radius:2px}
+.on-forest a,.ds-card-tint a.on-forest{color:var(--mauve)}
+.on-forest a:hover{color:var(--m-4)}
+
+/* ============================================================
+   SIGNAL STEPS — forest green ONLY.
+
+   The fill steps (#EFEBF7, #FAF4E8) are so light they read as white
+   on a dark ground; the color disappears. The signal steps survive.
+   The mirror of that rule is the one that is easy to miss: a signal
+   step on a LIGHT surface is a bug, not a subtle choice
+   (#E8D3A8 on white measures 1.47:1). On light surfaces use the
+   family's rule step for hairlines and its ink step for marks.
+
+   Surviving a dark ground is NOT the same as carrying type. Measured
+   on forest green:
+
+     sand signal     #E8D3A8   8.06:1   ✓ type — eyebrows, markers
+     lavender signal #C7BAE4   6.52:1   ✓ type — eyebrows, markers
+     mauve signal    #D3A6BB   5.60:1   marks only — legal but muddy
+                                        against green; dots and chips
+     green signal    #3A9470   3.18:1   ✗ no type — hairlines, borders
+
+   So .ds-signal--sand and --lavender may colour text. Use --mauve for
+   small marks and --green for rules only; for body and headings on
+   forest reach for .ds-on-dark (white headings, sand body).
+   ============================================================ */
+.on-forest .ds-signal--mauve{color:var(--mauve-signal)}
+.on-forest .ds-signal--green{color:var(--green-signal)}
+.on-forest .ds-signal--lavender{color:var(--lavender-signal)}
+.on-forest .ds-signal--sand{color:var(--sand-signal)}
+
+/* Mark and rule forms — the safe way to use the two steps that cannot
+   carry type: as a filled shape or a hairline, where the contrast
+   thresholds for text do not apply. */
+.on-forest .ds-mark--mauve{background:var(--mauve-signal)}
+.on-forest .ds-mark--green{background:var(--green-signal)}
+.on-forest .ds-mark--lavender{background:var(--lavender-signal)}
+.on-forest .ds-mark--sand{background:var(--sand-signal)}
+
+/* Ink-spot row — four dots, bottom-left of the forest green footer,
+   same position on every page. Closes the loop between deck and site. */
+.ds-ink-spots{display:flex;gap:6px;align-items:center}
+.ds-ink-spots span{width:7px;height:7px;border-radius:50%;display:block}
+
+/* ============================================================
+   SYSTEM STATES — inline type, never a filled panel.
+   ============================================================ */
+.ds-state{display:flex;gap:8px;align-items:flex-start;font-family:var(--font-sans);font-size:13px;line-height:1.45;margin-top:8px}
+.ds-state .ds-icon{flex:none;width:16px;height:16px;margin-top:1px}
+.ds-state--error{color:var(--state-error)}
+.ds-state--success{color:var(--state-success)}
+.ds-input--error{border:2px solid var(--state-error)}
+
+/* Icons take the ink of the card they sit on — so they inherit. */
+.ds-icon{display:inline-block;width:24px;height:24px;color:var(--forest)}
+.ds-icon svg{width:100%;height:100%;display:block;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}

@@ -183,46 +183,78 @@ const BROWSER_HEADERS = {
   'accept-language': 'en-US,en;q=0.9'
 };
 
-// Substack sits behind Cloudflare, which blocks GitHub Actions' datacenter IPs
-// (403) regardless of headers. Try the feed directly first, then fall back
-// through public read-only proxies that fetch from a different IP.
-const SOURCES = [
+// Substack sits behind Cloudflare, which 403s GitHub Actions' datacenter IPs
+// no matter the headers, so the feed must be fetched by something that pulls
+// it server-side. Primary is rss2json (reliable, returns structured JSON);
+// raw-XML readers/proxies are fallbacks; last resort keeps the current cards.
+const RSS2JSON = `https://api.rss2json.com/v1/api.json?count=${MAX_POSTS + 2}&rss_url=${encodeURIComponent(FEED)}`;
+const XML_SOURCES = [
   FEED,
+  `https://r.jina.ai/${FEED}`,
   `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
   `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(FEED)}`,
-  `https://corsproxy.io/?url=${encodeURIComponent(FEED)}`,
 ];
 
-async function fetchFeedXml() {
+function postsFromRss2Json(data) {
+  return (data.items || []).map(it => ({
+    title: decode(it.title || ''),
+    link: it.link || '',
+    date: monthYear(new Date(it.pubDate)),
+    category: (it.categories && it.categories[0]) || '',
+    summary: summarize(strip(it.description || it.content || '')),
+  })).filter(p => p.title && p.link);
+}
+
+async function fetchPosts() {
   const errors = [];
-  for (const url of SOURCES) {
+
+  // 1) rss2json — server-side fetch, structured JSON, most reliable.
+  try {
+    const res = await fetch(RSS2JSON, { headers: BROWSER_HEADERS });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.status === 'ok' && Array.isArray(data.items) && data.items.length) {
+        console.log(`Feed fetched via rss2json (${data.items.length} items)`);
+        return postsFromRss2Json(data);
+      }
+      errors.push(`rss2json -> status ${data.status || 'unknown'}, ${(data.items || []).length} items`);
+    } else {
+      errors.push(`rss2json -> HTTP ${res.status}`);
+    }
+  } catch (err) {
+    errors.push(`rss2json -> ${err.message}`);
+  }
+
+  // 2) raw-XML readers/proxies.
+  for (const url of XML_SOURCES) {
     try {
       const res = await fetch(url, { headers: BROWSER_HEADERS });
       if (!res.ok) { errors.push(`${url.split('?')[0]} -> HTTP ${res.status}`); continue; }
       const xml = await res.text();
       if (/<item[\s>]/i.test(xml)) {
         console.log(`Feed fetched via ${url.split('?')[0]}`);
-        return xml;
+        return parseFeed(xml);
       }
       errors.push(`${url.split('?')[0]} -> ok but no <item> found`);
     } catch (err) {
       errors.push(`${url.split('?')[0]} -> ${err.message}`);
     }
   }
+
   console.warn(`Could not fetch the feed from any source:\n  ${errors.join('\n  ')}`);
   return null;
 }
 
-const xml = await fetchFeedXml();
-if (!xml) {
-  // Every source was down (flaky public proxies) — keep the existing cards
-  // rather than failing the run or blanking the page. Next run will refresh.
+const allPosts = await fetchPosts();
+if (!allPosts) {
+  // Everything was unreachable this run — keep the existing cards rather than
+  // failing the run or blanking the page. The next run will refresh.
   console.log('Feed unavailable this run — leaving blog/index.html cards unchanged.');
   process.exit(0);
 }
 
-const posts = parseFeed(xml).slice(0, MAX_POSTS);
-if (!posts.length) throw new Error('Feed parsed but contained no posts — refusing to blank the page');
+const posts = allPosts.slice(0, MAX_POSTS);
+if (!posts.length) throw new Error('Feed reached but contained no posts — refusing to blank the page');
 
 const [lead, ...rest] = posts;
 const block = `\n${card(lead, 0, true)}\n\n<div class="post-grid">\n${[...rest.map((p, i) => card(p, i + 1, false)), archiveCard()].join('\n\n')}\n</div>\n`;

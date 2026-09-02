@@ -187,7 +187,13 @@ const BROWSER_HEADERS = {
 // no matter the headers, so the feed must be fetched by something that pulls
 // it server-side. Primary is rss2json (reliable, returns structured JSON);
 // raw-XML readers/proxies are fallbacks; last resort keeps the current cards.
-const RSS2JSON = `https://api.rss2json.com/v1/api.json?count=${MAX_POSTS + 2}&rss_url=${encodeURIComponent(FEED)}`;
+// A free rss2json API key (stored as the RSS2JSON_KEY Actions secret) makes
+// this reliable — the keyless endpoint now returns 422. Without a key it still
+// tries, then falls back to the XML sources below.
+const RSS2JSON_KEY = process.env.RSS2JSON_KEY || '';
+const RSS2JSON = `https://api.rss2json.com/v1/api.json?count=${MAX_POSTS + 2}`
+  + (RSS2JSON_KEY ? `&api_key=${RSS2JSON_KEY}` : '')
+  + `&rss_url=${encodeURIComponent(FEED)}`;
 const XML_SOURCES = [
   FEED,
   `https://r.jina.ai/${FEED}`,

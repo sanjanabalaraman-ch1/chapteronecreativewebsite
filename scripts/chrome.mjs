@@ -13,9 +13,9 @@ const NAV = `<nav>
 <a class="wordmark" href="/#hero"><span class="top">ChapterOne</span><span class="bot">CREATIVE</span></a>
 <div class="nav-links">
 <a href="/#what-i-do">3 ways to work</a>
+<a href="/#why-me">Why me</a>
 <a href="/blog/">Blog</a>
 <a href="/#changes">Impact</a>
-<a href="/#about">About</a>
 <a href="mailto:sanjana@chapteronecreative.io?subject=Starting%20a%20conversation" class="nav-cta">Get in touch<span class="icon i-16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><g fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"></path><path d="m13.5 6.5 5.5 5.5-5.5 5.5"></path></g></svg></span></a>
 </div>
 </div>
@@ -32,9 +32,10 @@ const FOOTER = `<footer>
 <div class="footer-col">
 <h4>Pages</h4>
 <a href="/#what-i-do">3 ways to work</a>
+<a href="/#why-me">Why me</a>
 <a href="/blog/">Blog</a>
 <a href="/#changes">Impact</a>
-<a href="/#about">About</a>
+<a href="/#faq">FAQ</a>
 </div>
 <div class="footer-col">
 <h4>Contact</h4>

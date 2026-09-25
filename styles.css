@@ -300,3 +300,53 @@ footer .wordmark .bot{font-size:10px;letter-spacing:5px;color:var(--white);margi
 .footer-cols{grid-template-columns:1fr}
 .sc-sources,.sc-outputs{gap:8px}
 }
+
+/* ═══ PHONES: scale all type to 70% of desktop ═══
+   Headings ride on the :root size tokens; everything else is the desktop px × 0.7.
+   The hero story-card is left alone: it is an illustration with micro-type that
+   already shrinks with its container, and 70% would make it unreadable. */
+@media (max-width:600px){
+:root{--fs-hero:clamp(26.6px,3.78vw,43.4px);--fs-sec:clamp(21px,2.59vw,30.8px);--fs-sub:clamp(16.8px,1.82vw,21px)}
+body{font-size:11.2px}
+.chapter{font-size:8.4px}
+.btn{font-size:9.8px}
+.nav-inner .wordmark .top{font-size:16.1px}
+.nav-inner .wordmark .bot{font-size:6.65px}
+.nav-links a{font-size:9.8px}
+.nav-cta{font-size:9.45px}
+.hero-sub{font-size:clamp(11.9px,.98vw,13.3px)}
+.hero-who-eyebrow{font-size:8.4px}
+.hero-who p{font-size:10.5px}
+.portrait-cap{font-size:7.35px}
+.split-head .aside{font-size:11.2px}
+.prologue-body p{font-size:11.9px}
+.ap-ghost{font-size:clamp(30.8px,3.22vw,42px)}
+.ap-phase,.ap-sol-label{font-size:7.7px}
+.ap-problem{font-size:clamp(14px,1.4vw,16.8px)}
+.ap-solution{font-size:clamp(13.3px,1.33vw,16.1px)}
+.pk-num,.pk-foot{font-size:7.7px}
+.pk h3{font-size:clamp(14px,1.4vw,16.1px)}
+.pk .pk-who{font-size:11.9px}
+.pk li{font-size:10.15px}
+.pk-line{font-size:clamp(14px,1.47vw,18.2px)}
+.ch-card h3{font-size:clamp(14px,1.4vw,16.1px)}
+.ch-card p{font-size:10.85px}
+.ch-card .n{font-size:7.7px}
+.about-stat .v{font-size:clamp(19.6px,2.24vw,26.6px)}
+.about-stat .k{font-size:7.7px}
+.about-bio p{font-size:11.2px}
+.why-row .n{font-size:7.7px}
+.why-row h3{font-size:clamp(13.3px,1.33vw,15.4px)}
+.why-row p{font-size:11.2px}
+.testi-eyebrow{font-size:7.7px}
+.testi-card blockquote p{font-size:11.2px}
+.testi-name{font-size:10.5px}
+.testi-role{font-size:8.4px}
+.faq-q{font-size:11.9px}
+.faq-a p{font-size:11.2px}
+footer .wordmark .top{font-size:22.4px}
+footer .wordmark .bot{font-size:7px}
+.footer-tag,.footer-col a{font-size:10.5px}
+.footer-col h4{font-size:7.7px}
+.footer-bottom{font-size:8.4px}
+}

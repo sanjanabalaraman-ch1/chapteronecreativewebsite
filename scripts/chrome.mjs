@@ -12,7 +12,7 @@ const NAV = `<nav>
 <div class="nav-inner">
 <a class="wordmark" href="/#hero"><span class="top">ChapterOne</span><span class="bot">CREATIVE</span></a>
 <div class="nav-links">
-<a href="/#what-i-do">3 ways to work</a>
+<a href="/#what-i-do">How I work</a>
 <a href="/#why-me">Why me</a>
 <a href="/blog/">Blog</a>
 <a href="/#changes">Impact</a>
@@ -31,7 +31,7 @@ const FOOTER = `<footer>
 <div class="footer-cols">
 <div class="footer-col">
 <h4>Pages</h4>
-<a href="/#what-i-do">3 ways to work</a>
+<a href="/#what-i-do">How I work</a>
 <a href="/#why-me">Why me</a>
 <a href="/blog/">Blog</a>
 <a href="/#changes">Impact</a>

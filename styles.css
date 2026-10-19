@@ -36,7 +36,7 @@ section{position:relative}
 
 /* ─── chapter marker ─── */
 .chapter{display:flex;align-items:center;gap:14px;font-family:var(--font-sans);font-size:var(--fs-eyebrow);font-weight:500;letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--deep-rose)}
-.chapter .no{color:var(--forest)}
+.chapter .no{color:var(--forest);white-space:nowrap}
 .chapter .dot{width:5px;height:5px;border-radius:50%;background:var(--mauve);flex:none}
 .chapter .label{color:var(--fg-2)}
 .chapter .rule{flex:1;height:1px;background:var(--line);min-width:24px}
@@ -309,6 +309,12 @@ footer .wordmark .bot{font-size:10px;letter-spacing:5px;color:var(--white);margi
 .nav-links a:not(.nav-cta){display:none}
 .footer-cols{grid-template-columns:1fr}
 .sc-sources,.sc-outputs{gap:8px}
+/* output labels are single words (HOMEPAGE, LINKEDIN) and can't wrap: tighten them so they fit a ~70px cell */
+.sc-out{padding:9px 7px}
+.sc-out-head{font-size:8px;letter-spacing:.08em;gap:4px}
+.sc-out-head .icon{width:12px;height:12px}
+/* let a long row note drop under its eyebrow rather than orphan a word */
+.sc-row{flex-wrap:wrap;row-gap:4px}
 }
 
 /* ═══ PHONES: scale all type to 70% of desktop ═══
